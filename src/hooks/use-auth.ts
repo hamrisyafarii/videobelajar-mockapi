@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axiosInstance from "../libs/axios";
+import { useNavigate } from "react-router-dom";
 
 interface UserSchema {
   email: string;
@@ -12,6 +13,7 @@ export const useAuth = () => {
     const saved = localStorage.getItem("users");
     return saved ? JSON.parse(saved) : null;
   });
+  const navigate = useNavigate();
 
   const login = async (email: string, password: string) => {
     try {
@@ -68,6 +70,7 @@ export const useAuth = () => {
 
     localStorage.removeItem("user");
     setUsers(null);
+    navigate("/");
   };
 
   return { users, login, register, logout };
