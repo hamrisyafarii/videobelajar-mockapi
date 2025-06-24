@@ -156,14 +156,14 @@ const ProductForm: React.FC<ProductFormProps> = ({
         {/* Form Actions */}
         <div className="flex flex-col sm:flex-row gap-3 pt-4">
           <button
-            type="submit"
+            type="button"
             onClick={onCancel}
             className="px-4 py-2 text-gray-700 bg-gray-200 hover:bg-gray-300 rounded-lg transition-colors"
           >
             Batal
           </button>
           <button
-            type="button"
+            type="submit"
             disabled={loading}
             className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
