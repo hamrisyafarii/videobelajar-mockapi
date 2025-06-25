@@ -14,7 +14,7 @@ const LoginForm = () => {
     password: "",
   });
   const [message, setMessage] = useState("");
-  const { login } = useAuth();
+  const { login, loading } = useAuth();
   const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,9 +73,10 @@ const LoginForm = () => {
       <div className="space-y-2">
         <button
           type="submit"
+          disabled={loading}
           className="w-full px-2 py-1 rounded-md bg-[#3ECF4C] hover:bg-[#E2FCD9CC] hover:text-[#3ECF4C] text-white font-medium cursor-pointer"
         >
-          Masuk
+          {loading ? "loading..." : "Masuk"}
         </button>
         <button
           onClick={() => navigate("/register")}

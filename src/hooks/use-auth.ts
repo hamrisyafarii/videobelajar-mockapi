@@ -13,10 +13,12 @@ export const useAuth = () => {
     const saved = localStorage.getItem("users");
     return saved ? JSON.parse(saved) : null;
   });
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const login = async (email: string, password: string) => {
     try {
+      setLoading(true);
       const res = await axiosInstance.get("/users");
       const users = res.data;
 
@@ -34,6 +36,8 @@ export const useAuth = () => {
     } catch (error) {
       console.log(error);
       return { success: false, message: "Login Gagal" };
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -43,6 +47,7 @@ export const useAuth = () => {
     password: string
   ) => {
     try {
+      setLoading(true);
       const res = await axiosInstance.get("/users");
       const user = res.data;
 
@@ -61,6 +66,8 @@ export const useAuth = () => {
     } catch (error) {
       console.log(error);
       return { success: false, message: "Gagal register" };
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -68,10 +75,10 @@ export const useAuth = () => {
     const confirmed = window.confirm("Apakah kamu yakin ingin logout?");
     if (!confirmed) return;
 
-    localStorage.removeItem("user");
+    localStorage.removeItem("users");
     setUsers(null);
     navigate("/");
   };
 
-  return { users, login, register, logout };
+  return { users, loading, login, register, logout };
 };
