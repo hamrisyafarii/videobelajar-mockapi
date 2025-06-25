@@ -10,7 +10,7 @@ interface RegisterSchema {
 }
 
 const RegisterForm = () => {
-  const { register } = useAuth();
+  const { register, loading } = useAuth();
   const navigate = useNavigate();
   const [formData, setFormData] = useState<RegisterSchema>({
     username: "",
@@ -84,9 +84,10 @@ const RegisterForm = () => {
       <div className="space-y-2">
         <button
           type="submit"
+          disabled={loading}
           className="w-full px-2 py-1 rounded-md bg-[#3ECF4C] hover:bg-[#E2FCD9CC] hover:text-[#3ECF4C] text-white font-medium cursor-pointer"
         >
-          Daftar
+          {loading ? "mendaftar..." : "Daftar"}
         </button>
         <button
           onClick={() => navigate("/")}
