@@ -1,7 +1,7 @@
 ## Environment Variables
 
-Buat file `.env.local` (atau `.env`) di root project dan isi seperti contoh di bawah.  
-**Jangan** commit file tersebut ke git – cukup ikuti template ini.
+Buat file `.env` di root project kamu dan isi seperti contoh di bawah.  
+**Jangan** commit file `.env` ke git yaa – cukup ikuti template ini ajaaaaa.
 
 # ====== Backend API ======
 
