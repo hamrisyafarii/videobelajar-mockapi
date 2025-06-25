@@ -36,22 +36,27 @@ const Header = (props: HeaderProps) => {
       <img src={Logo} alt="" width="170px" />
 
       <div className="flex gap-2">
-        <div
-          onClick={() => setIsOpen(!isOpen)}
-          className="hidden md:flex gap-2 "
-        >
-          <p className="items-center gap-2 mt-1 text-sm text-[#333333AD] hidden md:flex cursor-pointer">
-            Kategori
-          </p>
-          <img src={Avatar} alt="User" className="w-6 h-6 rounded-md" />
-        </div>
-        <div className="md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
-          {menuOpen ? (
-            <X className="w-6 h-6" />
-          ) : (
-            <AlignJustify className="w-6 h-6" />
-          )}
-        </div>
+        {users && (
+          <>
+            <div
+              onClick={() => setIsOpen(!isOpen)}
+              className="hidden md:flex gap-2 "
+            >
+              <p className="items-center gap-2 mt-1 text-sm text-[#333333AD] hidden md:flex cursor-pointer">
+                Kategori
+              </p>
+              <img src={Avatar} alt="User" className="w-6 h-6 rounded-md" />
+            </div>
+            <div className="md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
+              {menuOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <AlignJustify className="w-6 h-6" />
+              )}
+            </div>
+          </>
+        )}
+
         {isOpen && (
           <div
             ref={dropdownRef}
@@ -114,7 +119,7 @@ const Header = (props: HeaderProps) => {
               </Link>
             )}
             <div className="border-t my-1" />
-            {users ? (
+            {users && (
               <button
                 onClick={logout}
                 title="Logout"
@@ -126,7 +131,7 @@ const Header = (props: HeaderProps) => {
                   className="text-red-600 hover:text-red-800"
                 />
               </button>
-            ) : null}
+            )}
           </div>
         )}
       </div>
