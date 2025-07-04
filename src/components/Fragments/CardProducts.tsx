@@ -1,5 +1,5 @@
 interface ProductsSchema {
-  id?: number;
+  id?: string;
   productsImage: string;
   productName: string;
   description: string;

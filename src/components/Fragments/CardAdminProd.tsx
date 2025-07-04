@@ -1,7 +1,7 @@
 import { Edit, Eye, Trash2 } from "lucide-react";
 
 interface ProductsSchema {
-  id?: number;
+  id?: string;
   productsImage: string;
   productName: string;
   description: string;
@@ -15,7 +15,7 @@ interface ProductsSchema {
 interface CardProduct {
   product: ProductsSchema;
   onView: (product: ProductsSchema) => void;
-  onDelete: (id: number) => void;
+  onDelete: (id: string) => void;
   onEdit: (product: ProductsSchema) => void;
 }
 
