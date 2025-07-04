@@ -8,7 +8,7 @@ import Header from "../components/Layouts/Header";
 import { useAuth } from "../hooks/use-auth";
 
 interface ProductsSchema {
-  id?: number;
+  id?: string;
   productsImage: string;
   productName: string;
   description: string;
@@ -92,9 +92,9 @@ const AdminProductsPage = () => {
     try {
       let result;
       if (modalMode === "create") {
-        result = await createNewProduct(formData);
+        result = await createNewProduct(formData || null);
       } else if (modalMode === "edit" && selectedProduct?.id) {
-        result = await updateProduct(selectedProduct.id, formData);
+        result = await updateProduct(selectedProduct.id, formData );
       }
       if (result?.success) {
         alert(result.message);
@@ -110,7 +110,7 @@ const AdminProductsPage = () => {
     }
   };
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: string) => {
     if (window.confirm("Apakah Anda yakin ingin menghapus produk ini?")) {
       setLoading(true);
       try {

@@ -3,13 +3,13 @@ import CardProducts from "../components/Fragments/CardProducts";
 import Hero from "../components/Fragments/Hero";
 import Header from "../components/Layouts/Header";
 import { useAuth } from "../hooks/use-auth";
-import { useProducts } from "../hooks/use-products";
 import { DollarSign } from "lucide-react";
 import SecondHero from "../components/Fragments/SecondHero";
+import { productStore } from "../store/productStore";
 
 const ProductsPage = () => {
   const { users } = useAuth();
-  const { products } = useProducts();
+  const { products } = productStore();
   const [activeTab, setActiveTab] = useState("semua");
 
   if (!users) {

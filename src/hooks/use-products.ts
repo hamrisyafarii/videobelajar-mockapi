@@ -1,33 +1,33 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import axiosInstance from "../libs/axios";
-
-interface ProductsSchema {
-  id?: number;
-  productsImage: string;
-  productName: string;
-  description: string;
-  price: string;
-  avatar: string;
-  mentor: string;
-  roleMentor: string;
-  tabs?: string;
-}
+import { productStore } from "../store/productStore";
+import {
+  ProductsArraySchema,
+  type ProductDataSchema,
+} from "../schemas/product.schema";
 
 export const useProducts = () => {
-  const [products, setProducts] = useState<ProductsSchema[]>([]);
+  const {
+    products,
+    setProducts,
+    setAddProduct,
+    setUpdateProduct,
+    setDeleteProduct,
+  } = productStore();
 
-  const getAllProducts = async () => {
+  const getAllProducts = useCallback(async () => {
     try {
-      const res = await axiosInstance.get<ProductsSchema[]>("/products");
-      setProducts(res.data);
+      const res = await axiosInstance.get<ProductDataSchema[]>("/products");
+      const validate = ProductsArraySchema.parse(res.data);
+      setProducts(validate);
     } catch (error) {
       console.log("Error get all products", error);
     }
-  };
+  }, [setProducts]);
 
   useEffect(() => {
     getAllProducts();
-  }, []);
+  }, [getAllProducts]);
 
   const getProductById = async (id: number) => {
     try {
@@ -40,12 +40,12 @@ export const useProducts = () => {
     }
   };
 
-  const createNewProduct = async (dataProduct: ProductsSchema) => {
+  const createNewProduct = async (dataProduct: ProductDataSchema) => {
     try {
       const res = await axiosInstance.post("/products", dataProduct);
       const newProduct = res.data;
 
-      setProducts((prev) => [...prev, newProduct]);
+      setAddProduct(newProduct);
 
       return { success: true, message: "Berhasil menambahkan product" };
     } catch (error) {
@@ -54,14 +54,11 @@ export const useProducts = () => {
     }
   };
 
-  const updateProduct = async (id: number, dataProduct: ProductsSchema) => {
+  const updateProduct = async (id: string, dataProduct: ProductDataSchema) => {
     try {
       const res = await axiosInstance.put(`/products/${id}`, dataProduct);
       const newDataUpdated = res.data;
-
-      setProducts((prev) =>
-        prev.map((item) => (item.id === id ? newDataUpdated : item))
-      );
+      setUpdateProduct(newDataUpdated);
 
       return { success: true, message: "Berhasil update Product" };
     } catch (error) {
@@ -70,10 +67,10 @@ export const useProducts = () => {
     }
   };
 
-  const deleteProduct = async (id: number) => {
+  const deleteProduct = async (id: string) => {
     try {
       await axiosInstance.delete(`/products/${id}`);
-      setProducts((prev) => prev.filter((item) => item.id != id));
+      setDeleteProduct(id);
 
       return { success: true, message: "Berhasil menghapus product" };
     } catch (error) {
