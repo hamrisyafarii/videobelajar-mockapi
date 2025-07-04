@@ -5,11 +5,11 @@ import Header from "../components/Layouts/Header";
 import { useAuth } from "../hooks/use-auth";
 import { DollarSign } from "lucide-react";
 import SecondHero from "../components/Fragments/SecondHero";
-import { productStore } from "../store/productStore";
+import { useProducts } from "../hooks/use-products";
 
 const ProductsPage = () => {
   const { users } = useAuth();
-  const { products } = productStore();
+  const { products } = useProducts();
   const [activeTab, setActiveTab] = useState("semua");
 
   if (!users) {
